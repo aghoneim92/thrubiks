@@ -3,23 +3,23 @@ import * as THREE from "three";
 const geometry = new THREE.BoxGeometry(1, 1, 1);
 const materials = [
   // Right (red)
-  new THREE.MeshBasicMaterial({ color: 0xff0000 }),
+  new THREE.MeshPhongMaterial({ color: 0xff0000 }),
   // Left (orange)
-  new THREE.MeshBasicMaterial({ color: 0xffa500 }),
+  new THREE.MeshPhongMaterial({ color: 0xffa500 }),
   // Up (white)
-  new THREE.MeshBasicMaterial({ color: 0xffffff }),
+  new THREE.MeshPhongMaterial({ color: 0xffffff }),
   // Down (yellow)
-  new THREE.MeshBasicMaterial({ color: 0xffff00 }),
+  new THREE.MeshPhongMaterial({ color: 0xffff00 }),
   // Front (green)
-  new THREE.MeshBasicMaterial({ color: 0x00ff00 }),
+  new THREE.MeshPhongMaterial({ color: 0x00ff00 }),
   // Back (blue)
-  new THREE.MeshBasicMaterial({ color: 0x0000ff })
+  new THREE.MeshPhongMaterial({ color: 0x0000ff })
 ];
 
 enum Intro {
   FloatLeft,
   SpinRight,
-  FloatRight
+  Stop
 }
 
 export default class RubiksCube {
@@ -72,14 +72,13 @@ export default class RubiksCube {
 
           if (
             child.position.x > 0 &&
-            child.position.x - cubePositions[index][0] <= Number.EPSILON
+            child.position.x - cubePositions[index][0] <= 0.2
           ) {
-            this.intro = Intro.FloatRight;
+            this.intro = Intro.Stop;
           }
         });
         break;
-      case Intro.FloatRight:
-        group.rotation.y += 0.01;
+      default:
         break;
     }
   }
